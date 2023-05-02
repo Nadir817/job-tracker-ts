@@ -1,0 +1,27 @@
+.App {
+  display: grid;
+  text-align: center;
+  grid-template-columns: auto;
+  grid-template-rows: 2fr 2fr 4fr;
+  grid-template-areas:
+    "header"
+    "input"
+    "list";
+}
+
+.header {
+  grid-area: header;
+  background-color: aqua;
+}
+
+.form-input {
+  grid-area: input;
+  background-color: forestgreen;
+}
+
+.table {
+  grid-area: list;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
