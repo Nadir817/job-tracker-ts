@@ -1,8 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
 import { Job, JobType } from "../models/JobType";
-import { addJob } from "../services/DataService";
+import { useAppDispatch } from "../store/hooks";
+import { addJob } from "../store/jobSlice";
 
 function JobInput() {
+  const dispatch = useAppDispatch();
   const [item, setItem] = useState<Job>({
     id: 0,
     companyName: "",
@@ -26,7 +28,8 @@ function JobInput() {
       setErr("Do not leave anything blank.");
       return;
     }
-    addJob(item);
+    setErr("");
+    dispatch(addJob(item));
   };
 
   return (

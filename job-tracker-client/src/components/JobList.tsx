@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import type { RootState } from "../store/store";
+import { addJob, getJobs } from "../store/jobSlice";
+
 import "./JobList.css";
-import { Job } from "../models/JobType";
-import { getJobs } from "../services/DataService";
 import JobInfo from "./JobInfo";
+import { getJobLists } from "../services/DataService";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 export default function JobList() {
-  const [lists, setLists] = useState<Array<Job>>([]);
+  const jobs = useAppSelector((state: RootState) => state.job);
+  const dispatch = useAppDispatch();
   const fetchJobs = async () => {
-    const jobs = await getJobs();
+    const jobs = await getJobLists();
     return jobs;
   };
 
-  const deleteFromList = (id: number) => {
-    const newArr = lists.filter((job) => {
-      return job.id !== id;
-    });
-    setLists(newArr);
-  };
-
   useEffect(() => {
-    fetchJobs().then((jobList) => setLists(jobList));
+    fetchJobs().then((jobList) => {
+      jobList.map((job) => dispatch(addJob(job)));
+    });
   }, []);
 
   return (
@@ -32,8 +31,8 @@ export default function JobList() {
           <th>Salary</th>
           <th>Action</th>
         </tr>
-        {lists.map((ls) => {
-          return <JobInfo job={ls} deleteJob={deleteFromList} key={ls.id} />;
+        {jobs.map((ls) => {
+          return <JobInfo job={ls} key={ls.id} />;
         })}
       </tbody>
     </table>

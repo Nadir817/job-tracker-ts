@@ -24,7 +24,7 @@ const jobs: Job[] = [
   },
 ];
 
-export async function getJobs(): Promise<Array<Job>> {
+export async function getJobLists(): Promise<Array<Job>> {
   const promise = new Promise<Array<Job>>((res, rej) => {
     setTimeout(() => {
       res(jobs);

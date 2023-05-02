@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Job, JobType } from "../models/JobType";
+import { Job } from "../models/JobType";
 
 const initialState: Job[] = [];
 
@@ -22,3 +22,7 @@ export const jobSlice = createSlice({
     },
   },
 });
+
+export const { addJob, deleteJob, getJobs } = jobSlice.actions;
+
+export default jobSlice.reducer;
